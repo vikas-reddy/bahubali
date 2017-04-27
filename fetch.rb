@@ -2,7 +2,7 @@ require 'open-uri'
 require 'nokogiri'
 require 'net/smtp'
 
-INTERVAL = 120
+INTERVAL = 60
 
 # Websites
 BOOKMYSHOW = {
@@ -24,15 +24,15 @@ THEATERS = [
 
 # Email configuration
 NAME_FROM = 'Vikas Reddy'
-EMAIL_FROM = 'vikasreddy.com@gmail.com'
-EMAIL_TO = 'vikasreddy.com@gmail.com'
+EMAIL_FROM = 'sender@gmail.com'
+RECIPIENTS = ['recipient1@gmail.com', 'recipient2@gmail.com']
 PWD = 'THE_ORIGINAL_PASSWORD'
 
 
 def formatted_message(content)
 <<-MSG
 From: Vikas Program <vikas@reddy.com>
-To: Vikas Reddy <vikasreddy.com@gmail.com>, Swathi <swati.blues@gmail.com>
+To: Vikas Reddy <recipient1@gmail.com>, Swathi <recipient2@gmail.com>
 Content-Type: text/html
 Subject: Bahubali booking started!
 
@@ -45,7 +45,7 @@ def send_email(message)
   smtp.enable_starttls
   smtp.start('mail.google.com', EMAIL_FROM, PWD, :login) do
     # puts formatted_message(message)
-    smtp.send_message(formatted_message(message), EMAIL_FROM, EMAIL_TO)
+    smtp.send_message(formatted_message(message), EMAIL_FROM, RECIPIENTS)
   end
 end
 
